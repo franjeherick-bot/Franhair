@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "Client": {
+      "title": "Client",
+      "description": "Ficha de cliente do salão",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nome completo do cliente"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Telefone ou celular para contato"
+        },
+        "email": {
+          "type": "string",
+          "description": "E-mail opcional do cliente"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Ficha técnica e observações de procedimentos anteriores"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Data de cadastro YYYY-MM-DD"
+        }
+      },
+      "required": ["name", "phone", "createdAt"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Serviços e procedimentos oferecidos no salão",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nome do procedimento"
+        },
+        "durationMin": {
+          "type": "number",
+          "description": "Tempo estimado em minutos"
+        },
+        "price": {
+          "type": "number",
+          "description": "Preço do serviço"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Cabelo", "Unhas", "Estética", "Maquiagem"],
+          "description": "Categoria do procedimento"
+        }
+      },
+      "required": ["name", "durationMin", "price", "category"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Agendamento de horário na agenda",
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "description": "ID do cliente"
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Nome do cliente para acesso rápido"
+        },
+        "clientPhone": {
+          "type": "string",
+          "description": "Telefone do cliente"
+        },
+        "serviceId": {
+          "type": "string",
+          "description": "ID do procedimento cadastrado"
+        },
+        "serviceName": {
+          "type": "string",
+          "description": "Nome do procedimento para referência rápida"
+        },
+        "date": {
+          "type": "string",
+          "description": "Data do agendamento (YYYY-MM-DD)"
+        },
+        "time": {
+          "type": "string",
+          "description": "Horário do agendamento (HH:MM)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pendente", "confirmado", "concluido", "cancelado"],
+          "description": "Situação do agendamento"
+        },
+        "price": {
+          "type": "number",
+          "description": "Cobrança do procedimento"
+        },
+        "notified": {
+          "type": "boolean",
+          "description": "Se o lembrete foi emitido"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Anotações adicionais do profissional"
+        },
+        "professional": {
+          "type": "string",
+          "description": "Profissional responsável pelo atendimento"
+        }
+      },
+      "required": ["clientId", "clientName", "clientPhone", "serviceId", "serviceName", "date", "time", "status", "price", "notified", "professional"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Item do estoque de cosméticos",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nome comercial do produto"
+        },
+        "brand": {
+          "type": "string",
+          "description": "Marca fabricante"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Shampoo", "Condicionador", "Coloração", "Tratamento", "Finalizador", "Outro"],
+          "description": "Tipo de cosmético"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Estoque disponível"
+        },
+        "minQuantity": {
+          "type": "number",
+          "description": "Mínimo para alerta de reposição"
+        },
+        "priceCost": {
+          "type": "number",
+          "description": "Custo unitário"
+        },
+        "priceSell": {
+          "type": "number",
+          "description": "Preço sugerido de venda opcional"
+        },
+        "lastRestocked": {
+          "type": "string",
+          "description": "Última compra (YYYY-MM-DD)"
+        }
+      },
+      "required": ["name", "brand", "category", "quantity", "minQuantity", "priceCost", "lastRestocked"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Lançamento no livro caixa / fluxo financeiro",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["entrada", "saida"],
+          "description": "Fluxo financeiro"
+        },
+        "description": {
+          "type": "string",
+          "description": "Motivo fiscal ou comercial"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Dezembro ou monetário do lançamento"
+        },
+        "date": {
+          "type": "string",
+          "description": "Data do registro (YYYY-MM-DD)"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Serviço", "Venda", "Estoque", "Salários", "Aluguel & Contas", "Marketing", "Outros"],
+          "description": "Atividade do fluxo"
+        },
+        "appointmentId": {
+          "type": "string",
+          "description": "Referência opcional de agendamento"
+        }
+      },
+      "required": ["type", "description", "amount", "date", "category"]
+    },
+    "NotificationSetting": {
+      "title": "NotificationSetting",
+      "description": "Parâmetro do lembrete de atendimento",
+      "type": "object",
+      "properties": {
+        "timeBeforeHours": {
+          "type": "number",
+          "description": "Número de horas de antecedência"
+        },
+        "channel": {
+          "type": "string",
+          "enum": ["WhatsApp", "SMS", "Email"],
+          "description": "Canal de envio preferencial"
+        },
+        "template": {
+          "type": "string",
+          "description": "Gabarito pré-programado de mensagem"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Define se o gatilho está habilitado"
+        }
+      },
+      "required": ["timeBeforeHours", "channel", "template", "isActive"]
+    }
+  },
+  "firestore": {
+    "/clients/{clientId}": {
+      "schema": "Client",
+      "description": "Clientes cadastrados"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Procedimentos e serviços de beleza"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Horários agendados e status"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Controle físico de estoque"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Históricos financeiros do caixa"
+    },
+    "/notificationSettings/{settingId}": {
+      "schema": "NotificationSetting",
+      "description": "Modelos de lembretes automáticos"
+    }
+  }
+}
