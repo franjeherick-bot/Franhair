@@ -1,6 +1,0 @@
-{
-  "name": "Fran Hair",
-  "description": "Sistema completo para gestão de salão de beleza: agendamentos, histórico de clientes, fluxo de caixa, estoque e notificações de lembrete.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
